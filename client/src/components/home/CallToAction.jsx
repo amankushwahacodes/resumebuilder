@@ -13,7 +13,7 @@ function CallToAction() {
             href="https://prebuiltui.com"
             className="flex items-center gap-2 rounded py-3 px-8 bg-green-600 hover:bg-green-700 transition text-white"
           >
-            <span>Get started</span>
+            <span>Get Started</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
