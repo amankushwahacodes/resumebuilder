@@ -1,8 +1,21 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { dummyResumeData } from "../assets/assets";
-import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, FileText, FolderIcon, GraduationCap, Sparkles, User } from "lucide-react";
+import {
+  ArrowLeftIcon,
+  Briefcase,
+  ChevronLeft,
+  ChevronRight,
+  FileText,
+  FolderIcon,
+  GraduationCap,
+  Sparkles,
+  User,
+} from "lucide-react";
 import PersonaInfoForm from "../components/PersonaInfoForm";
+import ResumePreview from "../components/ResumePreview";
+import TemplateSelector from "../components/TemplateSelector";
+import ColorPicker from "../components/ColorPicker";
 
 function ResumeBuilder() {
   const { resumeId } = useParams();
@@ -28,19 +41,19 @@ function ResumeBuilder() {
     }
   };
 
-  const [activeSectionIndex , setActiveSectionIndex] = useState(0);
-  const [removeBackground , setRemoveBackground] = useState(false);
+  const [activeSectionIndex, setActiveSectionIndex] = useState(0);
+  const [removeBackground, setRemoveBackground] = useState(false);
 
   const sections = [
-    {id : 'personal' , name : "Personal Info" , icon : User},
-    {id : 'summary' , name : "Summary" , icon : FileText},
-    {id : 'experience' , name : "Experience" , icon : Briefcase},
-    {id : 'education' , name : 'Education' , icon : GraduationCap},
-    {id : 'projects' , name :'Projects' , icon : FolderIcon  },
-    {id : 'skills' , name : 'Skills' , icon : Sparkles},
-  ]
+    { id: "personal", name: "Personal Info", icon: User },
+    { id: "summary", name: "Summary", icon: FileText },
+    { id: "experience", name: "Experience", icon: Briefcase },
+    { id: "education", name: "Education", icon: GraduationCap },
+    { id: "projects", name: "Projects", icon: FolderIcon },
+    { id: "skills", name: "Skills", icon: Sparkles },
+  ];
 
-  const activeSection = sections[activeSectionIndex]
+  const activeSection = sections[activeSectionIndex];
 
   useEffect(() => {
     loadExistingResume();
@@ -76,7 +89,16 @@ function ResumeBuilder() {
               {/* section navigation  */}
 
               <div className="flex justify-between items-center mb-6 border-b border-gray-300 py-1">
-                <div></div>
+                <div className="flex  items-center gap-2">
+                  <TemplateSelector
+                    selectedTemplate={resumeData.template}
+                    onChange={(template) =>
+                      setResumeData((prev) => ({ ...prev, template }))
+                    }
+                  />
+
+                  <ColorPicker selectedColor={resumeData.accent_color} onChange={(color)=> setResumeData(prev => ({...prev, accent_color : color})) } />
+                </div>
                 <div className="flex items-center">
                   {activeSectionIndex !== 0 && (
                     <button
@@ -95,11 +117,13 @@ function ResumeBuilder() {
                   <button
                     onClick={() =>
                       setActiveSectionIndex((prevIndex) =>
-                        Math.mean(prevIndex + 1, sections.length -1)
+                        Math.min(prevIndex + 1, sections.length - 1)
                       )
                     }
-                    className={`flex items-center gap-1 p-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all ${activeSectionIndex === sections.length -1 && 'opactiy-50'}`}
-                    disabled={activeSectionIndex === sections.length -1 }
+                    className={`flex items-center gap-1 p-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all ${
+                      activeSectionIndex === sections.length - 1 && "opactiy-50"
+                    }`}
+                    disabled={activeSectionIndex === sections.length - 1}
                   >
                     <ChevronRight className="size-4" /> Next
                   </button>
@@ -109,15 +133,34 @@ function ResumeBuilder() {
               {/* form content */}
 
               <div className="space-y-6">
-                {activeSection.id === 'personal' && (
-                    <PersonaInfoForm data={resumeData.personal_info} onChange={(data)=> setResumeData(prev => ({...prev , personal_info : data}) )} removeBackground={removeBackground} setRemoveBackground={setRemoveBackground} />
+                {activeSection.id === "personal" && (
+                  <PersonaInfoForm
+                    data={resumeData.personal_info}
+                    onChange={(data) =>
+                      setResumeData((prev) => ({
+                        ...prev,
+                        personal_info: data,
+                      }))
+                    }
+                    removeBackground={removeBackground}
+                    setRemoveBackground={setRemoveBackground}
+                  />
                 )}
               </div>
             </div>
           </div>
 
           {/* Right panel preview */}
-          <div></div>
+          <div className="lg:col-span-7 max-lg:mt-6">
+            <div>{/* buttons */}</div>
+
+            {/* resume preview  */}
+            <ResumePreview
+              data={resumeData}
+              template={resumeData.template}
+              accentColor={resumeData.accent_color}
+            />
+          </div>
         </div>
       </div>
     </div>
