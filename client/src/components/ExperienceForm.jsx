@@ -1,6 +1,8 @@
 import { Briefcase, Plus, Sparkles, Trash2 } from "lucide-react";
 
 function ExperienceForm({ data, onChange }) {
+
+  
   function addExperience() {
     const newExperience = {
       company: "",
