@@ -1,8 +1,8 @@
 import { json } from "express";
-import User from "../models/User";
+import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import Resume from "../models/Resume";
+import Resume from "../models/Resume.js";
 
 const generateToken = (userId) => {
   const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
