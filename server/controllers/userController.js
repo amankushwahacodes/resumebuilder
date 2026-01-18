@@ -2,6 +2,7 @@ import { json } from "express";
 import User from "../models/User";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import Resume from "../models/Resume";
 
 const generateToken = (userId) => {
   const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
@@ -81,3 +82,43 @@ export const loginUser = async (req, res) => {
     return res.status(400).json({message : error.message})
   }
 };
+
+// GET : /api/users/data
+
+export const getUserById = async(req,res) =>{
+    try{
+        const userId = req.userId;
+
+        const user = await User.findById(userId);
+
+        if(!user) {
+            return res.status(404).json({message : 'User not found'})
+        }
+
+        user.password = undefined;
+
+        return res.status(200).json({user});
+
+    }
+    catch(error){
+        return res.status(400).json({message : error.message})
+    }
+}
+
+// controller for getting user resumes
+// GET : /api/users/resumes
+
+export const getUserResumes = async (req,res) =>{
+  try{
+    const userId = req.userId;
+
+    const resumes = await Resume.find({userId})
+    return res.status(200).json({
+      resumes
+    })
+
+  }
+  catch (error){
+    return res.status(400).json({message : error.message})
+  }
+}
