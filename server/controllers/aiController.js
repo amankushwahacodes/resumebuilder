@@ -29,7 +29,7 @@ export const enchanceProfessionalSummary = async (req, res) => {
 
     const enhancedContent = response.choices[0].message.content;
 
-    return response.status(200).json({enhancedContent})
+    return res.status(200).json({enhancedContent})
   } catch (error) {
     return res.status(400).json({message : error.message})
   }
@@ -64,7 +64,7 @@ export const enchanceJobDescription = async (req, res) => {
 
     const enhancedContent = response.choices[0].message.content;
 
-    return response.status(200).json({enhancedContent})
+    return res.status(200).json({enhancedContent})
   } catch (error) {
     return res.status(400).json({message : error.message})
   }
