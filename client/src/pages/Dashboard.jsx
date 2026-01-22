@@ -1,5 +1,6 @@
 import {
   FilePenLineIcon,
+  LoaderCircleIcon,
   PencilIcon,
   PlusIcon,
   TrashIcon,
@@ -29,7 +30,13 @@ function Dashboard() {
   const [isLoading, setIsLoading] = useState(false);
 
   const loadAllResumes = async () => {
-    setAllResumes(dummyResumeData);
+    try{
+      const {data} = await api.get('api/users/resumes', {headers : {Authorization : token}})
+      setAllResumes(data.resumes);
+    }
+    catch(error){
+      toast.error(error?.response?.data?.message || error.message);
+    }
   };
 
   const createResume = async (e) => {
@@ -66,7 +73,7 @@ function Dashboard() {
       navigate(`/app/builder/${data.resumeId}`)
 
     } catch (error) {
-      toast.error(error?.response?.data?.message || error.message);
+      toast.error(error?.response?.data?.message ||  error.message);
     }
     setIsLoading(false)
   };
@@ -262,7 +269,9 @@ function Dashboard() {
               </div>
 
               <button className="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
-                Upload Resume
+               {isLoading && <LoaderCircleIcon className="animate-spin size-4 text-white"/>}
+               {isLoading ? 'Uploading...' : '  Upload Resume'}
+              
               </button>
 
               <XIcon
