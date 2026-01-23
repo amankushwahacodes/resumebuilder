@@ -140,7 +140,7 @@ export const uploadResume = async (req, res) => {
       },
     ],
 
-    projects: [
+    project: [
       {
         name: { type: String },
         type: { type: String },
