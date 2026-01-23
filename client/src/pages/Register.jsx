@@ -1,14 +1,15 @@
 import React from "react";
-import {Lock, Mail, User2Icon} from 'lucide-react'
-import api from "../configs/api";
 import { useDispatch } from "react-redux";
 import { login } from "../app/features/authSlice";
+import api from "../configs/api";
 import toast from "react-hot-toast";
+import { Lock, Mail, User2Icon } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
-function Login() {
+function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
 
   const [formData, setFormData] = React.useState({
     name: "",
@@ -18,18 +19,15 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      const {data} = await api.post(`/api/users/login`,formData)
-      dispatch(login(data))
-      localStorage.setItem('token',data.token);
+    try {
+      const { data } = await api.post("/api/users/register", formData);
+      dispatch(login(data));
+      localStorage.setItem("token", data.token);
       toast.success(data.message);
-
-      navigate('/app',{replace : true});
+      navigate('/app',{replace : true})
+    } catch (error) {
+      toast(error?.response?.data?.message || error.message);
     }
-    catch(error){
-      toast(error?.response?.data?.message || error.message)
-    }
-
   };
 
   const handleChange = (e) => {
@@ -37,20 +35,29 @@ function Login() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  
-
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <form
         onSubmit={handleSubmit}
         className="sm:w-[350px] w-full text-center border border-gray-300/60 rounded-2xl px-8 bg-white"
       >
-        <h1 className="text-gray-900 text-3xl mt-10 font-medium">
-         Login
-        </h1>
-        <p className="text-gray-500 text-sm mt-2">Please Log in to continue</p>
+        <h1 className="text-gray-900 text-3xl mt-10 font-medium">Sign up</h1>
+        <p className="text-gray-500 text-sm mt-2">Please Sign Up to continue</p>
+        <div className="flex items-center mt-6 w-full bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
+          <User2Icon size={16} color="#6B7280" />
+
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            className="border-none outline-none ring-0"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
         <div className="flex items-center w-full mt-4 bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
-         <Mail size={13} color="#6b7280"/>
+          <Mail size={13} color="#6b7280" />
           <input
             type="email"
             name="email"
@@ -82,14 +89,11 @@ function Login() {
           type="submit"
           className="mt-2 w-full h-11 rounded-full text-white bg-green-500 hover:opacity-90 transition-opacity"
         >
-        Login
+          Sign up
         </button>
-        <Link
-          to='/register'
-          className="text-gray-500 text-sm mt-3 mb-11"
-        >
-          Don't have an account?
-          <span href="#" className="text-green-500 hover:underline">
+        <Link to='/login' className="text-gray-500 text-sm mt-3 mb-11">
+          Already have an account?
+          <span  className="text-green-500 hover:underline">
             click here
           </span>
         </Link>
@@ -98,4 +102,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;

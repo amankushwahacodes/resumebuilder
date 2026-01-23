@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
+
 import Layout from "./pages/Layout";
 import Dashboard from "./pages/Dashboard";
 import ResumeBuilder from "./pages/ResumeBuilder";
@@ -9,6 +9,10 @@ import api from "./configs/api";
 import { login, setLoading } from "./app/features/authSlice";
 import { Toaster } from "react-hot-toast";
 import { useEffect } from "react";
+import RootRedirect from "./components/RootRedirect";
+import Login from "./pages/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Register from "./pages/Register";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,8 +43,17 @@ function App() {
     <>
       <Toaster />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="app" element={<Layout />}>
+        <Route path="/" element={<RootRedirect />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="app"
+          element={
+            <ProtectedRoute>
+              <Layout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<Dashboard />} />
           <Route path="builder/:resumeId" element={<ResumeBuilder />} />
         </Route>
