@@ -82,17 +82,17 @@ It provides secure authentication, resume customization, live preview, and seaml
 ## Tech Stack
 
 - **Frontend:** 
- - **Framework & UI:** React, React Router, Tailwind CSS
- - **State Management:** Redux Toolkit
- - **Build tool:** Vite
+  - **Framework & UI:** React, React Router, Tailwind CSS
+  - **State Management:** Redux Toolkit
+  - **Build tool:** Vite
 - **Backend**
- - **Runtime & Framework:** Supabase (Database, Authentication, Real-time)
- - **Database:** MongoDB (Atlas)
- - **Authentication:** JWT-based authentication
- - **AI Integration:** OpenAI API (or your AI service)
+  - **Runtime & Framework:** Supabase (Database, Authentication, Real-time)
+  - **Database:** MongoDB (Atlas)
+  - **Authentication:** JWT-based authentication
+  - **AI Integration:** OpenAI API (or your AI service)
 - **Deployment**
- - **Frontend Hosting:** Vercel
- - **Backend Hosting:** Render
+  - **Frontend Hosting:** Vercel
+  - **Backend Hosting:** Render
 
 
 ## Engineering Highlights
