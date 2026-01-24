@@ -81,13 +81,21 @@ function Dashboard() {
   const editTitle = async (e) => {
     try {
       e.preventDefault();
-      const { data } = await api.put(`/api/resumes/update/`,{resumeId : editResumeId, resumeData : {title}} ,{
-        headers: { Authorization: token },
-      });
-      setAllResumes(allResumes.map(resume => resume._id === editResumeId ? {...resume,title} : resume));
-      setTitle('');
-      setEditResumeId('');
-      toast.success(data.message)
+      const { data } = await api.put(
+        `/api/resumes/update/`,
+        { resumeId: editResumeId, resumeData: { title } },
+        {
+          headers: { Authorization: token },
+        },
+      );
+      setAllResumes(
+        allResumes.map((resume) =>
+          resume._id === editResumeId ? { ...resume, title } : resume,
+        ),
+      );
+      setTitle("");
+      setEditResumeId("");
+      toast.success(data.message);
     } catch (error) {
       toast.error(error?.response?.data?.message || error.message);
     }
@@ -138,11 +146,11 @@ function Dashboard() {
 
           <button
             onClick={() => setShowUploadResume(true)}
-            className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-around rounded-lg gap-2 text-slate-600 border border-dashed border-slate-300 group hover:border-purple-500 hover:shadow-lg transition-all duration-300 cursor-pointer"
+            className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-around rounded-lg gap-2 text-slate-600 border border-dashed border-slate-300 group hover:border-blue-500 hover:shadow-lg transition-all duration-300 cursor-pointer"
           >
-            <UploadCloudIcon className="size-11 transition-all duration-300 p-2.5 bg-gradient-to-br from-purple-300 to-purple-500 text-white rounded-full" />
+            <UploadCloudIcon className="size-11 transition-all duration-300 p-2.5 bg-gradient-to-br from-blue-300 to-blue-500 text-white rounded-full" />
 
-            <p className="text-sm group-hover:text-purple-600 transition-all duration-300">
+            <p className="text-sm group-hover:text-blue-600 transition-all duration-300">
               Upload Existing
             </p>
           </button>
@@ -221,11 +229,11 @@ function Dashboard() {
                 placeholder="Enter resume title"
                 onChange={(e) => setTitle(e.target.value)}
                 value={title}
-                className="w-full px-4 py-2 mb-4 focus:border-green-600 ring-green-600 "
+                className="w-full px-4 py-2 mb-4 focus:border-blue-600 ring-blue-600 "
                 required
               />
 
-              <button className="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
+              <button className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
                 Create Resume
               </button>
 
@@ -256,7 +264,7 @@ function Dashboard() {
                 onChange={(e) => setTitle(e.target.value)}
                 value={title}
                 placeholder="Enter resume title"
-                className="w-full px-4 py-2 mb-4 focus:border-green-600 ring-green-600 "
+                className="w-full px-4 py-2 mb-4 focus:border-blue-600 ring-blue-600 "
                 required
               />
 
@@ -267,9 +275,9 @@ function Dashboard() {
                 >
                   {" "}
                   Select resume file
-                  <div className="flex flex-col items-center justify-center gap-2 border group text-slate-400 border-dashed rounded-md p-4 py-10 my-4 hover:border-green-500 hover:text-green-700 cursor-pointer transition-colors">
+                  <div className="flex flex-col items-center justify-center gap-2 border group text-slate-400 border-dashed rounded-md p-4 py-10 my-4 hover:border-blue-500 hover:text-blue-700 cursor-pointer transition-colors">
                     {resume ? (
-                      <p className="text-green-700">{resume.name}</p>
+                      <p className="text-blue-700">{resume.name}</p>
                     ) : (
                       <>
                         <UploadCloud className="size-14 stroke-1" />
@@ -288,7 +296,10 @@ function Dashboard() {
                 />
               </div>
 
-              <button disabled={isLoading} className="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors flex items-center justify-center gap-2">
+              <button
+                disabled={isLoading}
+                className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+              >
                 {isLoading && (
                   <LoaderCircleIcon className="animate-spin size-4 text-white" />
                 )}
@@ -322,11 +333,11 @@ function Dashboard() {
                 placeholder="Enter resume title"
                 onChange={(e) => setTitle(e.target.value)}
                 value={title}
-                className="w-full px-4 py-2 mb-4 focus:border-green-600 ring-green-600 "
+                className="w-full px-4 py-2 mb-4 focus:border-blue-600 ring-blue-600 "
                 required
               />
 
-              <button className="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
+              <button className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
                 Update title
               </button>
 

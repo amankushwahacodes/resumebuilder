@@ -1,14 +1,13 @@
 import { GraduationCap, Plus, Trash2 } from "lucide-react";
 
-function EducationForm({ data, onChange }) {    
-  
-    function addEducation() {
+function EducationForm({ data, onChange }) {
+  function addEducation() {
     const newEducation = {
       institution: "",
       degree: "",
       field: "",
       graduation_date: "",
-      gpa: ""
+      gpa: "",
     };
 
     onChange([...data, newEducation]);
@@ -36,7 +35,7 @@ function EducationForm({ data, onChange }) {
 
         <button
           onClick={addEducation}
-          className="flex items-center gap-2 px-3 py-1 text-sm bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors"
+          className="flex items-center gap-2 px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
         >
           <Plus className="size-4" /> Add Education
         </button>
@@ -108,14 +107,11 @@ function EducationForm({ data, onChange }) {
 
               <input
                 value={education.gpa || ""}
-                onChange={(e) =>
-                  updateEducation(index, "gpa", e.target.value)
-                }
+                onChange={(e) => updateEducation(index, "gpa", e.target.value)}
                 type="text"
                 className="px-3 py-2 text-sm "
                 placeholder="GPA (optional)"
               />
-
             </div>
           ))}
         </div>

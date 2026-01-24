@@ -32,18 +32,21 @@ function ExperienceForm({ data, onChange }) {
     onChange(updated);
   }
 
-  async function generateDescritption(index){
+  async function generateDescritption(index) {
     setGeneratingIndex(index);
     const experience = data[index];
     const prompt = `enhance this job description ${experience.description} for the position of ${experience.position} at ${experience.company}`;
 
     try {
-      const {data} = await api.post('/api/ai/enhance-job-desc',{userContent : prompt} , {headers : {Authorization : token}})
-      updateExperience(index,"description",data.enhancedContent)
+      const { data } = await api.post(
+        "/api/ai/enhance-job-desc",
+        { userContent: prompt },
+        { headers: { Authorization: token } },
+      );
+      updateExperience(index, "description", data.enhancedContent);
     } catch (error) {
       toast.error(error.message);
-    }
-    finally{
+    } finally {
       setGeneratingIndex(-1);
     }
   }
@@ -60,7 +63,7 @@ function ExperienceForm({ data, onChange }) {
 
         <button
           onClick={addExperience}
-          className="flex items-center gap-2 px-3 py-1 text-sm bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors"
+          className="flex items-center gap-2 px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
         >
           <Plus className="size-4" /> Add Experience
         </button>
@@ -154,12 +157,19 @@ function ExperienceForm({ data, onChange }) {
                     {" "}
                     Job Description
                   </label>
-                  <button onClick={()=>generateDescritption(index)} disabled={generatingIndex === index || !experience.position || !experience.company} className="flex items-center gap-1 px-2 py-1 text-xs bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors disabled:opacity-50">
+                  <button
+                    onClick={() => generateDescritption(index)}
+                    disabled={
+                      generatingIndex === index ||
+                      !experience.position ||
+                      !experience.company
+                    }
+                    className="flex items-center gap-1 px-2 py-1 text-xs bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors disabled:opacity-50"
+                  >
                     {generatingIndex === index ? (
-                      <Loader2 className="w-3 h-3 animate-spin"/>
+                      <Loader2 className="w-3 h-3 animate-spin" />
                     ) : (
-
-                    <Sparkles className="w-3 h-3" />
+                      <Sparkles className="w-3 h-3" />
                     )}
                     Enhance with AI
                   </button>

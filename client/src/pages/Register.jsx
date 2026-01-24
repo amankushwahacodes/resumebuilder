@@ -10,7 +10,6 @@ function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   const [formData, setFormData] = React.useState({
     name: "",
     email: "",
@@ -24,7 +23,7 @@ function Register() {
       dispatch(login(data));
       localStorage.setItem("token", data.token);
       toast.success(data.message);
-      navigate('/app',{replace : true})
+      navigate("/app", { replace: true });
     } catch (error) {
       toast(error?.response?.data?.message || error.message);
     }
@@ -80,22 +79,20 @@ function Register() {
             required
           />
         </div>
-        <div className="mt-4 text-left text-green-500">
+        <div className="mt-4 text-left text-blue-500">
           <button className="text-sm" type="reset">
             Forget password?
           </button>
         </div>
         <button
           type="submit"
-          className="mt-2 w-full h-11 rounded-full text-white bg-green-500 hover:opacity-90 transition-opacity"
+          className="mt-2 w-full h-11 rounded-full text-white bg-blue-500 hover:opacity-90 transition-opacity"
         >
           Sign up
         </button>
-        <Link to='/login' className="text-gray-500 text-sm mt-3 mb-11">
+        <Link to="/login" className="text-gray-500 text-sm mt-3 mb-11">
           Already have an account?
-          <span  className="text-green-500 hover:underline">
-            click here
-          </span>
+          <span className="text-blue-500 hover:underline">click here</span>
         </Link>
       </form>
     </div>
