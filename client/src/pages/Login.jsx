@@ -1,5 +1,5 @@
 import React from "react";
-import { Lock, Mail, User2Icon } from "lucide-react";
+import { Lock, Mail } from "lucide-react";
 import api from "../configs/api";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../app/features/authSlice";
@@ -12,6 +12,11 @@ function Login() {
   const navigate = useNavigate();
 
   const {user,loading} = useSelector(state => state.auth);
+    const [formData, setFormData] = React.useState({
+      name: "",
+      email: "",
+      password: "",
+    });
 
   if(loading) return <Loader/>
 
@@ -20,11 +25,7 @@ function Login() {
     return <Navigate to='/app' replace />
   }
 
-  const [formData, setFormData] = React.useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
