@@ -1,14 +1,24 @@
 import React from "react";
 import { Lock, Mail, User2Icon } from "lucide-react";
 import api from "../configs/api";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../app/features/authSlice";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const {user,loading} = useSelector(state => state.auth);
+
+  if(loading) return <Loader/>
+
+
+  if(user){
+    return <Navigate to='/app' replace />
+  }
 
   const [formData, setFormData] = React.useState({
     name: "",
@@ -23,7 +33,6 @@ function Login() {
       dispatch(login(data));
       localStorage.setItem("token", data.token);
       toast.success(data.message);
-
       navigate("/app", { replace: true });
     } catch (error) {
       toast(error?.response?.data?.message || error.message);

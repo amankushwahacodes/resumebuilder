@@ -1,14 +1,19 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../app/features/authSlice";
 import api from "../configs/api";
 import toast from "react-hot-toast";
 import { Lock, Mail, User2Icon } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 
 function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  
+  const { user, loading } = useSelector((state) => state.auth);
+
 
   const [formData, setFormData] = React.useState({
     name: "",
@@ -33,6 +38,14 @@ function Register() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  
+  if (loading) return <Loader />;
+
+  if (user) {
+    return <Navigate to="/app" replace />;
+  }
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
