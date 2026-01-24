@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="./client/public/logo.svg" alt="logo" width="200" height="auto">
+  <img src="./client/public/whitelogo.png" alt="logo" width="200" height="auto">
 
   <h1>AI Resume Builder</h1>
 
@@ -89,7 +89,7 @@ It provides secure authentication, resume customization, live preview, and seaml
   - **Runtime & Framework:** Supabase (Database, Authentication, Real-time)
   - **Database:** MongoDB (Atlas)
   - **Authentication:** JWT-based authentication
-  - **AI Integration:** OpenAI API (or your AI service)
+  - **AI Integration:** OpenAI API
 - **Deployment**
   - **Frontend Hosting:** Vercel
   - **Backend Hosting:** Render
