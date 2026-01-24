@@ -28,8 +28,6 @@ app.use(
   }),
 );
 
-app.options("*", cors());
-
 app.get('/',(req,res)=> res.send("Server is live..."));
 
 app.use('/api/users',userRouter);
