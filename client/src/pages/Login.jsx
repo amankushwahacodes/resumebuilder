@@ -77,11 +77,11 @@ function Login() {
             required
           />
         </div>
-        <div className="mt-4 text-left text-blue-500">
+        {/* <div className="mt-4 text-left text-blue-500">
           <button className="text-sm" type="reset">
             Forget password?
           </button>
-        </div>
+        </div> */}
         <button
           type="submit"
           className="mt-2 w-full h-11 rounded-full text-white bg-blue-500 hover:opacity-90 transition-opacity"
