@@ -45,6 +45,26 @@ function Login() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleDemoLogin = async () => {
+    try {
+      console.log(import.meta.env.VITE_DEMO_EMAIL);
+      console.log(import.meta.env.VITE_DEMO_PASSWORD);
+
+      const { data } = await api.post(`/api/users/login`, {
+        email: import.meta.env.VITE_DEMO_EMAIL,
+        password: import.meta.env.VITE_DEMO_PASSWORD,
+      });
+
+      dispatch(login(data));
+      localStorage.setItem("token", data.token);
+      toast.success("Logged in as Demo User");
+      navigate("/app", { replace: true });
+    } catch (error) {
+      toast("Demo login failed");
+    }
+  };
+
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <form
@@ -88,7 +108,15 @@ function Login() {
         >
           Login
         </button>
-        <Link to="/register" className="text-gray-500 text-sm mt-3 mb-11">
+        <button
+          type="button"
+          onClick={handleDemoLogin}
+          // className="mt-3 w-full h-11 rounded-full border border-gray-300"
+          className="mt-3 w-full py-2 rounded-full border border-gray-300 text-sm text-gray-600 hover:bg-gray-50 transition"
+        >
+          Try Demo
+        </button>
+        <Link to="/register" className="block text-gray-500 text-sm mt-5 mb-11">
           Don't have an account?
           <span href="#" className="text-blue-500 hover:underline">
             click here
