@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../app/features/authSlice";
 import api from "../configs/api";
@@ -10,7 +10,8 @@ import Loader from "../components/Loader";
 function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [ isSigningUp, setIsSigningUp ] = useState(false);
+  
   
   const { user, loading } = useSelector((state) => state.auth);
 
@@ -24,6 +25,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setIsSigningUp(true);
       const { data } = await api.post("/api/users/register", formData);
       dispatch(login(data));
       localStorage.setItem("token", data.token);
@@ -31,6 +33,9 @@ function Register() {
       navigate("/app", { replace: true });
     } catch (error) {
       toast(error?.response?.data?.message || error.message);
+    }
+    finally{
+      setIsSigningUp(false)
     }
   };
 
@@ -48,10 +53,10 @@ function Register() {
 
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-gray-100">
       <form
         onSubmit={handleSubmit}
-        className="sm:w-[350px] w-full text-center border border-gray-300/60 rounded-2xl px-8 bg-white"
+        className="sm:w-[370px] w-full text-center rounded-2xl px-8 py-8 bg-white shadow-lg border border-gray-200 backdrop-blur-sm  transition-all duration-300 hover:shadow-2xl"
       >
         <h1 className="text-gray-900 text-3xl mt-10 font-medium">Sign up</h1>
         <p className="text-gray-500 text-sm mt-2">Please Sign Up to continue</p>
@@ -92,13 +97,19 @@ function Register() {
             required
           />
         </div>
-        
+
         <button
           type="submit"
-          className="mt-2 w-full h-11 rounded-full text-white bg-blue-500 hover:opacity-90 transition-opacity"
+          disabled={isSigningUp}
+          className="mt-2 w-full h-11 rounded-full text-white bg-blue-500 hover:opacity-90 transition-opacity disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center"
         >
-          Sign up
+          {isSigningUp ? (
+            <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+          ) : (
+            "Sign up"
+          )}
         </button>
+
         <Link to="/login" className="block text-gray-500 text-sm mt-3 mb-11">
           Already have an account?
           <span className="text-blue-500 hover:underline">click here</span>
